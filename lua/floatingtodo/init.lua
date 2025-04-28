@@ -1,5 +1,7 @@
 local M = {}
 
+local win = nil
+
 local default_opts = {
   target_file = '~/notes/todo.md',
   border = 'single',
@@ -34,6 +36,11 @@ local function win_config(opts)
 end
 
 local function open_floating_file(opts)
+  if win ~= nil and vim.api.nvim_win_is_valid(win) then
+    vim.api.nvim_set_current_win(win)
+    return
+  end
+
   local expanded_path = expand_path(opts.target_file)
 
   if vim.fn.filereadable(expanded_path) == 0 then
@@ -50,7 +57,7 @@ local function open_floating_file(opts)
 
   vim.bo[buf].swapfile = false
 
-  local win = vim.api.nvim_open_win(buf, true, win_config(opts))
+  win = vim.api.nvim_open_win(buf, true, win_config(opts))
 
   vim.api.nvim_buf_set_keymap(buf, 'n', 'q', '', {
     noremap = true,
@@ -60,6 +67,7 @@ local function open_floating_file(opts)
         vim.notify('save your changes pls', vim.log.levels.WARN)
       else
         vim.api.nvim_win_close(0, true)
+        win = nil
       end
     end,
   })
