@@ -63,7 +63,7 @@ local function open_floating_file(opts)
 end
 
 local function setup_user_commands(opts)
-  opts = vim.tbl_deep_extend("force", opts, default_opts)
+  opts = vim.tbl_deep_extend("force", default_opts, opts)
 
   vim.api.nvim_create_user_command("Td", function()
     open_floating_file(opts)
