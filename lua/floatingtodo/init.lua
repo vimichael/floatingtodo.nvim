@@ -26,7 +26,9 @@ local function calculate_position(position)
 	end
 
 	-- Keyword position
-	if position == "topleft" then
+	if position == "center" then
+		posx, posy = 0.5, 0.5
+	elseif position == "topleft" then
 		posx, posy = 0, 0
 	elseif position == "topright" then
 		posx, posy = 1, 0
