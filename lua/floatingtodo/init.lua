@@ -1,9 +1,9 @@
 local M = {}
 
 local default_opts = {
-	target_file = "~/notes/todo.md",
-	border = "single",
-	auto_save_on_quit = true,
+	target_file = "~/notes/todo.md", -- todo file path
+	border = "single", -- border style
+	auto_save = true, -- automatically save on quit
 }
 
 local function expand_path(path)
@@ -53,13 +53,6 @@ local function open_floating_file(opts)
 	vim.api.nvim_buf_set_keymap(buf, "n", "q", "", {
 		noremap = true,
 		silent = true,
-		-- callback = function()
-		-- 	if vim.api.nvim_get_option_value("modified", { buf = buf }) then
-		-- 		vim.notify("save your changes pls", vim.log.levels.WARN)
-		-- 	else
-		-- 		vim.api.nvim_win_close(0, true)
-		-- 	end
-		-- end,
 		callback = function()
 			if vim.api.nvim_get_option_value("modified", { buf = buf }) then
 				if opts.auto_save_on_quit then
