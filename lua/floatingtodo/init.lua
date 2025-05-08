@@ -106,7 +106,7 @@ local function open_floating_file(opts)
 		silent = true,
 		callback = function()
 			if vim.api.nvim_get_option_value("modified", { buf = buf }) then
-				if opts.auto_save_on_quit then
+				if opts.auto_save then
 					vim.api.nvim_buf_call(buf, function()
 						vim.cmd("write")
 					end)
